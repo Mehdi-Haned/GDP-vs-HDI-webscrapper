@@ -1,3 +1,4 @@
+from cProfile import label
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -39,6 +40,17 @@ gdp = gdp[["Estimate", "year"]]
 
 # Scatter plot
 
+Interesting_Countries = [
+    "China", "United States", "Japan", "France", "Iran", "Germany", "Canada",
+    "Russia", "Brazil", "Argentina", "Mexico", "Algeria", "Tunisia", "Egypt",
+    "Guinea-Bissau", "Grenada", "Cuba", "India", "Iceland", "Central African Republic",
+    "Pakistan", "Turkey", "Poland", "Bulgaria", "Serbia", "Malta", "Bahrain", "Andorra", "Luxembourg",
+    "Ireland", "Mauritius", "Seychelles", "Morocco", "Niger", "Nigeria", "Nepal", "Laos",
+    "Iraq", "Guatemala", "Uzbekistan", "Libya", "Comoros", "Palau", "Marshall Islands"
+    "Tonga", "Dominica", "Samoa", "Saint Luca", "Eritrea", "Bhutan", "Rwanda", "Madagascar", "Armenia",
+    "Angola", "Slovakia", "Mongolia"
+]
+
 H = []
 G = []
 countries = []
@@ -57,9 +69,13 @@ for c in gdp.index:
 
 data = pd.DataFrame(data={"GDP": G, "HDI": H}, index = countries)
 
-plt.scatter(G, H)
+plt.scatter(G, H, c="b", s=1.7)
 plt.xscale("log")
 plt.xlabel("GDP of country (Millions of dollars)")
 plt.ylabel("Human development index of country")
+
+for i, name in enumerate(countries):
+    if name in Interesting_Countries:
+        plt.text(G[i], H[i], name)
 
 plt.show()
